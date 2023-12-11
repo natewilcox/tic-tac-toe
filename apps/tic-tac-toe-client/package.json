@@ -2,8 +2,6 @@
   "name": "@natewilcox/tic-tac-toe-client",
   "version": "0.0.1",
   "description": "tic tac toe client",
-  "main": "dist/main.js",
-  "types": "dist/main.d.ts",
   "scripts": {
     "start": "parcel index.html --port 8080",
     "build": "parcel build index.html"
