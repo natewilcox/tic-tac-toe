@@ -38,7 +38,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
             name: 'build-artifact'
-            path: ./apps/tic-tac-toe-client/build
+            path: ./apps/tic-tac-toe-client/dist
 
       - name: Patch Library version
         run: |
