@@ -1,0 +1,10 @@
+{
+  "name": "@natewilcox/tic-tac-toe",
+  "version": "0.0.1",
+  "description": "A tic-tac-toe game",
+  "workspaces": [
+    "apps/tic-tac-toe-client",
+    "apps/tic-tac-toe-server",
+    "libs/tic-tac-toe-shared"
+  ]
+}

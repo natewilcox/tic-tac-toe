@@ -1,0 +1,30 @@
+{
+  "name": "@natewilcox/tic-tac-toe-shared",
+  "version": "0.0.1",
+  "description": "Shared compoents for tic-tac-toe game",
+  "main": "dist/main.js",
+  "types": "dist/main.d.ts",
+  "files": [
+    "dist/**/*"
+  ],
+  "scripts": {
+    "clean": "npx rimraf dist && npx rimraf tsconfig.tsbuildinfo",
+    "build": "tsc",
+    "build:watch": "tsc -w",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "phaser",
+    "game"
+  ],
+  "author": "Nathan Wilcox",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/natewilcox/tic-tac-toe.git"
+  },
+  "license": "GPL-3.0",
+  "dependencies": {
+    "colyseus": "^0.15.8",
+    "phaser": "^3.70.0"
+  }
+}
