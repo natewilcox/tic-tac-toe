@@ -34,6 +34,7 @@
     "@natewilcox/nathan-core": "^0.0.1",
     "@natewilcox/tic-tac-toe-shared": "*",
     "colyseus": "^0.15.8",
-    "phaser": "~3.55.2"
+    "phaser": "~3.55.2",
+    "tic-tac-toe-minimax": "^1.0.8"
   }
 }
