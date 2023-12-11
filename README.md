@@ -1,4 +1,4 @@
-# Tic Tac Toe Monorepo
+# Tic Tac Toe
 
 This repository contains a client, server, and shared library for a Tic Tac Toe game.
 
