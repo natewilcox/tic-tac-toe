@@ -19,7 +19,8 @@ export class LobbyScene extends BaseScene
     }
 
     create() {
-
+        this.configureResize(this);
+        
         //check if an invite code is in url
         const urlParams = new URLSearchParams(window.location.search);
         const inviteCode = urlParams.get('invite');

@@ -2,29 +2,26 @@ import { Scene } from "@natewilcox/phaser-nathan";
 
 export class BaseScene extends Scene
 {
-    DEFAULT_HEIGHT = 600;
+    DEFAULT_HEIGHT = 800;
     DEFAULT_WIDTH = 800;
 
     get isMobile() {
         return 'contacts' in navigator;
     }
+    
+    configureResize(scene: Scene) {
 
-    get gameWidth() {
+        const resize = () => {
+            scene.setScreenSize(Math.min(this.DEFAULT_WIDTH, window.screen.width), Math.min(this.DEFAULT_HEIGHT, window.screen.height));
+        }
+    
+        window.addEventListener('resize', resize);
+        console.log(window.screen.width, this.scale.width)
 
-        const mediaQuery = window.matchMedia("(max-width: 768px)");  
-        const fullDeviceSize = this.scale.isFullscreen || mediaQuery.matches;
-        const width = Math.min(window.innerWidth, this.DEFAULT_WIDTH);
-
-        return width;
-    }
-
-    get gameHeight() {
-
-        const mediaQuery = window.matchMedia("(max-width: 768px)");  
-        const fullDeviceSize = this.scale.isFullscreen || mediaQuery.matches;
-        const height = Math.min(window.innerHeight, this.DEFAULT_HEIGHT);
-
-        return height;
+        //if the screen size is different than the scale size, resize
+        if(window.screen.width != this.scale.width || window.screen.height != this.scale.height) {
+            resize();
+        }
     }
 
     addImage(x: number, y: number, frame: string, cb?: () => void) {

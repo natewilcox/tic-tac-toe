@@ -29,6 +29,7 @@ export class GameScene extends BaseScene
 
     async create(config: any) {
         
+        this.configureResize(this);
         const url = `${process.env.HOST}`;
         console.log(`Connecting to: ${url}`);
         
