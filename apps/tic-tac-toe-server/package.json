@@ -1,0 +1,39 @@
+{
+  "name": "@natewilcox/tic-tac-toe-server",
+  "version": "0.0.1",
+  "description": "tic-tac-toe server",
+  "main": "dist/main.js",
+  "types": "dist/main.d.ts",
+  "scripts": {
+    "clean": "npx rimraf dist && npx rimraf tsconfig.tsbuildinfo",
+    "build": "tsc",
+    "build:watch": "tsc -w"
+  },
+  "author": "Nathan Wilcox",
+  "license": "GPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/natewilcox/tic-tac-toe.git"
+  },
+  "staticFiles": {
+    "staticPath": "public",
+    "watcherGlob": "**"
+  },
+  "devDependencies": {
+    "@colyseus/testing": "^0.15.0",
+    "@types/mocha": "^10.0.1",
+    "mocha": "^10.2.0",
+    "rimraf": "^5.0.0",
+    "tsx": "^3.12.6",
+    "typescript": "^5.0.4"
+  },
+  "dependencies": {
+    "@colyseus/command": "^0.2.1",
+    "@faker-js/faker": "^8.3.1",
+    "@natewilcox/colyseus-nathan": "^0.0.1",
+    "@natewilcox/nathan-core": "^0.0.1",
+    "@natewilcox/tic-tac-toe-shared": "*",
+    "colyseus": "^0.15.8",
+    "phaser": "~3.55.2"
+  }
+}
