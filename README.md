@@ -1,6 +1,6 @@
 # Tic Tac Toe
 
-This repository contains a client, server, and shared library for a Tic Tac Toe game.
+This repository contains a client, server, and shared library for a Tic Tac Toe.
 
 ## Structure
 
