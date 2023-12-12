@@ -1,4 +1,4 @@
-import { ArraySchema, Schema } from "@colyseus/schema";
+import type { ArraySchema, Schema } from "@colyseus/schema";
 import { IPlayerState } from "./IPlayerState";
 
 export interface IRoomState extends Schema {

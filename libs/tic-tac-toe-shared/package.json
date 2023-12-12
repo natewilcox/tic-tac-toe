@@ -1,7 +1,22 @@
 {
   "name": "@natewilcox/tic-tac-toe-shared",
   "version": "0.0.18",
-  "description": "Shared compoents for tic-tac-toe game",
+  "description": "A shared library for a multiplayer Tic Tac Toe game, providing common components and utilities used by both the client-side and server-side applications.",
+  
+  "author": "Nathan Wilcox",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/natewilcox/tic-tac-toe.git"
+  },
+  "license": "GPL-3.0",
+  "keywords": [
+    "phaser",
+    "game",
+    "multiplayer",
+    "tic-tac-toe",
+    "shared-library"
+  ],
+  
   "main": "dist/main.js",
   "types": "dist/main.d.ts",
   "files": [
@@ -13,16 +28,6 @@
     "build:watch": "tsc -w",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [
-    "phaser",
-    "game"
-  ],
-  "author": "Nathan Wilcox",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/natewilcox/tic-tac-toe.git"
-  },
-  "license": "GPL-3.0",
   "dependencies": {
     "colyseus": "^0.15.8",
     "phaser": "^3.55.2"

@@ -1,8 +1,10 @@
 # Tic Tac Toe
 
-This repository contains a client, server, and shared library for a Tic Tac Toe.
+Basic TIC TAC TOE. Play against AI or a Friend.
 
 ## Structure
+
+This repository contains a client, server, and shared library for a Tic Tac Toe.
 
 The repository is structured as follows:
 
@@ -17,6 +19,12 @@ The repository is structured as follows:
 - Node.js
 - npm
 
-### Installation
+## Installation
 
-1. Clone the repository:
+1. Clone the repository: `git clone https://github.com/natewilcox/tic-tac-toe.git`
+2. Navigate into the repository: `cd tic-tac-toe`
+3. Install the dependencies: `npm install`
+
+## Contributing
+
+Contributions are welcome! Please read the [contributing guidelines](CONTRIBUTING.md) first.

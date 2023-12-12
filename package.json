@@ -1,7 +1,23 @@
 {
   "name": "@natewilcox/tic-tac-toe",
   "version": "0.0.1",
-  "description": "A tic-tac-toe game",
+  "description": "A multiplayer Tic Tac Toe game built with Phaser, featuring a client-server architecture and shared library code.",
+
+  "author": "Nathan Wilcox",
+  "license": "GPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/natewilcox/tic-tac-toe.git"
+  },
+  "keywords": [
+    "phaser",
+    "colyseus",
+    "typescript",
+    "multiplayer",
+    "game",
+    "tic-tac-toe"
+  ],
+
   "workspaces": [
     "apps/tic-tac-toe-client",
     "apps/tic-tac-toe-server",

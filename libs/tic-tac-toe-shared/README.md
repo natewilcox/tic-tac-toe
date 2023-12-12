@@ -1,4 +1,3 @@
-# Tic tac toe Shared
+# tic-tac-toe-shared
 
-Shared components for client/server
-
+Shared components and types for tic-tac-toe

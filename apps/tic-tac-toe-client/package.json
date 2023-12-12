@@ -1,17 +1,32 @@
 {
   "name": "@natewilcox/tic-tac-toe-client",
   "version": "0.0.18",
-  "description": "tic tac toe client",
-  "scripts": {
-    "start": "parcel index.html --port 8080 --no-cache",
-    "build": "parcel build index.html --no-cache"
-  },
+  "description": "The client-side application for a multiplayer Tic Tac Toe game, built with Phaser. It communicates with a server to manage game state and player interactions.",
+  
   "author": "Nathan Wilcox",
   "license": "GPL-3.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/natewilcox/tic-tac-toe.git"
   },
+  "keywords": [
+    "phaser",
+    "game",
+    "typescript",
+    "multiplayer",
+    "tic-tac-toe",
+    "client"
+  ],
+
+  "staticFiles": {
+    "staticPath": "public"
+  },
+
+  "scripts": {
+    "start": "parcel index.html --port 8080 --no-cache",
+    "build": "parcel build index.html --no-cache"
+  },
+  
   "dependencies": {
     "@natewilcox/nathan-core": "^0.0.2",
     "@natewilcox/phaser-nathan": "^0.0.13",
@@ -31,8 +46,5 @@
     "path-browserify": "^1.0.1",
     "stream-browserify": "^3.0.0",
     "typescript": "^5.3.3"
-  },
-  "staticFiles": {
-    "staticPath": "public"
   }
 }
