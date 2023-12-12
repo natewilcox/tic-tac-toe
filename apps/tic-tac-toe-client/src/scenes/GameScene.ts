@@ -1,10 +1,9 @@
-import { ServerService } from "@natewilcox/phaser-nathan";
-import { ClientMessages, IRoomState, ServerMessages } from "@natewilcox/tic-tac-toe-shared";
+import 'dotenv/config';
 import * as Colyseus from "colyseus.js";
-import 'dotenv/config'
-import { BaseScene } from "./BaseScene";
+import * as Nathan from "@natewilcox/phaser-nathan";
+import { ClientMessages, IRoomState, ServerMessages } from "@natewilcox/tic-tac-toe-shared";
 
-export class GameScene extends BaseScene
+export class GameScene extends Nathan.Scene
 {
     //board entities
     private match: Phaser.GameObjects.Text;
@@ -21,7 +20,7 @@ export class GameScene extends BaseScene
         [' ', ' ', ' '],
     ];
 
-    SERVER: ServerService<IRoomState, ClientMessages>;
+    SERVER: Nathan.ServerService<IRoomState, ClientMessages>;
 
     constructor () {
         super('game');
@@ -29,12 +28,12 @@ export class GameScene extends BaseScene
 
     async create(config?: any) {
         super.create();
-        
-        this.configureResize(this);
+        Nathan.resizeToScreen(this, true, 800, 800);
+
         const url = `${process.env.HOST}`;
         console.log(`Connecting to: ${url}`);
         
-        this.SERVER = new ServerService(url);
+        this.SERVER = new Nathan.ServerService(url);
         console.log("playing game");
 
         //get room info. private if invited. public if not
@@ -48,7 +47,7 @@ export class GameScene extends BaseScene
             room = await this.SERVER.connect(roomName, { roomId, online });
         }
         catch(e) {
-            console.error(`unable to join ${roomName}. Returning to lobby`, e);
+            console.error(`unable to join ${roomName}. Returning to Menu`, e);
             this.handleBack();
         }
 
@@ -280,12 +279,12 @@ export class GameScene extends BaseScene
     };
 
     private handleBack = () => {
-        console.log("going back to lobby");
+        console.log("going back to menu");
         
         this.SERVER.leave();
 
         this.scene.stop('game');
-        this.scene.start('lobby');
+        this.scene.start('menu');
     };
 
     private setStatus = (text: string) => {
@@ -326,5 +325,38 @@ export class GameScene extends BaseScene
 
             console.log(`Placed '${marker}' at (${x}, ${y})`);
         }
+    }
+
+    addImage(x: number, y: number, frame: string, cb?: () => void) {
+
+        const img = this.add.image(x, y, frame);
+        img.setScale(0.5, 0.5);
+        img.setOrigin(0.5);
+
+        if(cb) {
+            img.setInteractive();
+            img.on('pointerdown', cb);
+        }
+
+        return img;
+    }
+
+    addText(x: number, y: number, txt: string, size: string, color: string, cb?: () => void) {
+
+        const gameText = this.add.text(x, y, txt, {
+            fontSize: size,
+            fontFamily: 'Arial',
+            color: color,
+            align: 'center'
+        });
+
+        gameText.setOrigin(0.5);
+
+        if(cb) {
+            gameText.setInteractive();
+            gameText.on('pointerdown', cb);
+        }
+
+        return gameText;
     }
 }

@@ -1,5 +1,5 @@
 import Phaser from "phaser";
-import { LobbyScene } from "./scenes/LobbyScene";
+import * as Nathan from "@natewilcox/phaser-nathan";
 import { GameScene } from "./scenes/GameScene";
 
 const config = {
@@ -13,9 +13,41 @@ const config = {
             gravity: { y: 0 },
         }
     },
-    backgroundColor: '#4CAF50',
-    scene: [LobbyScene]
+    backgroundColor: '#4CAF50'
 } as Phaser.Types.Core.GameConfig;
 
 const game = new Phaser.Game(config);
+game.scene.add('menu', Nathan.BasicMenuScene, false);
 game.scene.add('game', GameScene, false);
+
+const menuConfig: Nathan.BasicMenuSceneConfig = {
+    title: 'TIC TAC TOE',
+    subTitle: 'SELECT MODE:',
+    menuItems: [{
+        name: 'CPU',
+        options: {
+            online: false,
+        }
+    },
+    {
+        name: 'PLAYER',
+        options: {
+            online: true,
+        }
+    },
+    {
+        name: 'INVITE',
+        options: {
+            online: true,
+            invite: true
+        }
+    }],
+    oncreated: (scene: Nathan.Scene) => {
+
+        //add resize listener when scene is created
+        Nathan.resizeToScreen(scene, true, 800, 800);
+    }
+};
+
+//start menu with configured menu items
+game.scene.start('menu', menuConfig);
