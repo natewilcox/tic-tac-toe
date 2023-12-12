@@ -1,6 +1,6 @@
 {
   "name": "@natewilcox/tic-tac-toe-shared",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "Shared compoents for tic-tac-toe game",
   "main": "dist/main.js",
   "types": "dist/main.d.ts",
