@@ -19,9 +19,13 @@ export class BaseScene extends Scene
             scene.setScreenSize(Math.min(this.DEFAULT_WIDTH, window.screen.width), Math.min(this.DEFAULT_HEIGHT, window.screen.height));
         }
     
-        window.addEventListener('resize', resize);
-        console.log(window.screen.width, this.scale.width)
-        console.log(window.innerHeight, this.scale.height)
+        window.addEventListener('resize', () => {
+            resize();
+            console.log(window.innerWidth, window.innerHeight);
+            console.log(window.screen.width, window.screen.height);
+            console.log(this.scale.width, this.scale.height);
+        });
+   
         //if the screen size is different than the scale size, resize
         if(window.screen.width != this.scale.width || window.screen.height != this.scale.height) {
             resize();
