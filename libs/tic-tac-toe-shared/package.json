@@ -25,6 +25,6 @@
   "license": "GPL-3.0",
   "dependencies": {
     "colyseus": "^0.15.8",
-    "phaser": "^3.70.0"
+    "phaser": "^3.55.2"
   }
 }

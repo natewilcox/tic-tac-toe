@@ -13,12 +13,12 @@
     "url": "https://github.com/natewilcox/tic-tac-toe.git"
   },
   "dependencies": {
-    "@natewilcox/nathan-core": "^0.0.1",
-    "@natewilcox/phaser-nathan": "^0.0.6",
+    "@natewilcox/nathan-core": "^0.0.2",
+    "@natewilcox/phaser-nathan": "^0.0.7",
     "@natewilcox/tic-tac-toe-shared": "*",
     "buffer": "^6.0.3",
     "dotenv": "^16.3.1",
-    "phaser": "^3.70.0",
+    "phaser": "^3.55.2",
     "process": "^0.11.10"
   },
   "devDependencies": {
