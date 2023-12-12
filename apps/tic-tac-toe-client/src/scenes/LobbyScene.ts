@@ -19,6 +19,7 @@ export class LobbyScene extends BaseScene
     }
 
     create() {
+        super.create();
         this.configureResize(this);
         
         //check if an invite code is in url

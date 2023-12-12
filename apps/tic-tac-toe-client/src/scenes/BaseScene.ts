@@ -5,6 +5,10 @@ export class BaseScene extends Scene
     DEFAULT_HEIGHT = 800;
     DEFAULT_WIDTH = 800;
 
+    create() {
+        super.create();
+    }
+    
     get isMobile() {
         return 'contacts' in navigator;
     }

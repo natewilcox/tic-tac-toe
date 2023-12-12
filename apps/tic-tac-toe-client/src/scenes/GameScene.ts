@@ -27,7 +27,8 @@ export class GameScene extends BaseScene
         super('game');
     }
 
-    async create(config: any) {
+    async create(config?: any) {
+        super.create();
         
         this.configureResize(this);
         const url = `${process.env.HOST}`;
