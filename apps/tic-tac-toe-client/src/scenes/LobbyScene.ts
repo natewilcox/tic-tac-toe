@@ -82,53 +82,81 @@ export class LobbyScene extends BaseScene
     };
 
     private printWelcomeScreen = () => {
+
         console.log("drawing menu")
-        const scale = this.cameras.main.height > 400 ? 1 : 0.5;
+        const scale = this.cameras.main.height / 800;
         const centerX = this.cameras.main.width / 2;
         const centerY = this.cameras.main.height / 2;
 
         if(this.titleText) {
             this.titleText.destroy();
         }
-        this.titleText = this.addText(centerX, 50, 'TIC TAC TOE', '50px', '#FFFFFF')
-        this.titleText.setOrigin(0.5, 0);
-    
+
+        this.titleText = this.add.text(centerX, 50 * scale, 'TIC TAC TOE', {
+            fontFamily: 'Arial',
+            fontSize: `${50 * scale}px`,
+            align: 'center' ,
+        }).setOrigin(0.5, 0);
+
         if(this.instructionsText) {
             this.instructionsText.destroy();
         }
 
-        this.instructionsText = this.addText(centerX, centerY-75, 'SELECT MODE:', '30px', '#FFFFFF');
-        this.instructionsText.setOrigin(0.5, 0);
+        this.instructionsText = this.add.text(centerX, centerY- (75*scale), 'SELECT MODE:', {
+            fontFamily: 'Arial',
+            fontSize: `${30 * scale}px`,
+            align: 'center' ,
+        }).setOrigin(0.5, 0);
+
 
         if(this.cpuText) {
             this.cpuText.destroy();
             this.cpuText.off('pointerdown')
         }
-        this.cpuText = this.addText(centerX, centerY, 'CPU', '60px', '#FFFFFF', this.playCpu);  
-        this.cpuText.setOrigin(0.5);
- 
+
+        this.cpuText = this.add.text(centerX, centerY, 'CPU', {
+            fontFamily: 'Arial',
+            fontSize: `${60 * scale}px`,
+            align: 'center' ,
+        }).setOrigin(0.5, 0);
+        this.cpuText.setInteractive();
+        this.cpuText.on('pointerdown', this.playCpu);
+
         if(this.playerText) {
             this.playerText.destroy();
             this.playerText.off('pointerdown');
         }
-        this.playerText = this.addText(centerX, centerY + 75, 'Player', '60px', '#FFFFFF', this.playOnline);
-        this.playerText.setOrigin(0.5);
+
+        this.playerText = this.add.text(centerX, centerY + (75*scale), 'Player', {
+            fontFamily: 'Arial',
+            fontSize: `${60 * scale}px`,
+            align: 'center' ,
+        }).setOrigin(0.5, 0);
+        this.playerText.setInteractive();
+        this.playerText.on('pointerdown', this.playOnline);
 
         if(this.inviteText?.active) {
             this.inviteText.destroy();
             this.inviteText.off('pointerdown');
         }
-        this.inviteText = this.addText(centerX, centerY + 150, 'Invite', '60px', '#FFFFFF', this.invitePlayer);
-        this.inviteText.setOrigin(0.5);
+
+        this.inviteText = this.add.text(centerX, centerY + (150*scale), 'Invite', {
+            fontFamily: 'Arial',
+            fontSize: `${60 * scale}px`,
+            align: 'center' ,
+        }).setOrigin(0.5, 0);
+        this.inviteText.setInteractive();
+        this.inviteText.on('pointerdown', this.invitePlayer);
 
         if(!('contacts' in navigator)) {
-            this.inviteText.setVisible(false);
+           this.inviteText.setVisible(false);
         }
 
         if(this.fullscreen) {
             this.fullscreen.destroy();
             this.fullscreen.off("pointerdown");
         }
+        
         this.fullscreen = this.addImage(this.cameras.main.width-25, 20, 'full-screen', this.toggleFullscreen);
         this.fullscreen.setScale(0.25, 0.25);
         this.fullscreen.setVisible(this.isMobile);
