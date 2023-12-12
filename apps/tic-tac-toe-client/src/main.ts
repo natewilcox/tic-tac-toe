@@ -40,7 +40,8 @@ const menuConfig: Nathan.BasicMenuSceneConfig = {
         options: {
             online: true,
             invite: true
-        }
+        },
+        mobileOnly: true
     }],
     oncreated: (scene: Nathan.Scene) => {
 
