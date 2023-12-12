@@ -13,7 +13,6 @@ export class GameScene extends Nathan.Scene
     private rematchBadge: Phaser.GameObjects.Image;  
     private markers: Phaser.GameObjects.Text[] = [];  
     private boardGraphics: Phaser.GameObjects.Graphics;
-    private fullscreen: Phaser.GameObjects.Image; 
     private board = [
         [' ', ' ', ' '],
         [' ', ' ', ' '],
@@ -216,15 +215,6 @@ export class GameScene extends Nathan.Scene
         const rematchBadgePos = portrait ? canvas.height - 23 : canvas.height - 23;
         this.rematchBadge = this.addImage(canvas.width - 25, rematchBadgePos, 'rematch')
         this.rematchBadge.setVisible(false);
-
-        if(this.fullscreen) {
-            this.fullscreen.destroy();
-            this.fullscreen.off("pointerdown");
-        }
-        this.fullscreen = this.addImage(this.cameras.main.width-25, 20, 'full-screen', this.toggleFullscreen);
-        this.fullscreen.setScale(0.25, 0.25);
-        this.fullscreen.setVisible(this.isMobile);
-        this.fullscreen.setAlpha(0.4);
         
         //draw actual board
         if(this.boardGraphics) {
