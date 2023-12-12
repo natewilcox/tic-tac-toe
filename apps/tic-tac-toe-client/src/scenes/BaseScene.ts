@@ -16,7 +16,7 @@ export class BaseScene extends Scene
     configureResize(scene: Scene) {
 
         const resize = () => {
-            scene.setScreenSize(Math.min(this.DEFAULT_WIDTH, window.innerWidth), Math.min(this.DEFAULT_HEIGHT, window.innerHeight));
+            scene.setScreenSize(Math.min(this.DEFAULT_WIDTH, document.documentElement.clientWidth), Math.min(this.DEFAULT_HEIGHT, document.documentElement.clientHeight));
         }
     
         window.addEventListener('resize', () => {
