@@ -16,7 +16,7 @@ export class BaseScene extends Scene
     configureResize(scene: Scene) {
 
         const resize = () => {
-            scene.setScreenSize(Math.min(this.DEFAULT_WIDTH, window.screen.width), Math.min(this.DEFAULT_HEIGHT, window.screen.height));
+            scene.setScreenSize(Math.min(this.DEFAULT_WIDTH, window.innerWidth), Math.min(this.DEFAULT_HEIGHT, window.innerHeight));
         }
     
         window.addEventListener('resize', () => {
@@ -27,7 +27,7 @@ export class BaseScene extends Scene
         });
    
         //if the screen size is different than the scale size, resize
-        if(window.screen.width != this.scale.width || window.screen.height != this.scale.height) {
+        if(window.innerWidth != this.scale.width || window.innerWidth != this.scale.height) {
             resize();
         }
     }
