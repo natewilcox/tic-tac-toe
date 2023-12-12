@@ -1,6 +1,6 @@
 {
   "name": "@natewilcox/tic-tac-toe-client",
-  "version": "0.0.17",
+  "version": "0.0.18",
   "description": "tic tac toe client",
   "scripts": {
     "start": "parcel index.html --port 8080 --no-cache",
