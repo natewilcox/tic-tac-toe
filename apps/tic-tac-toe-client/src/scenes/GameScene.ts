@@ -41,10 +41,11 @@ export class GameScene extends BaseScene
         let online = config.online;
         let roomName = !config.invite ? 'tictactoe_public_room' : 'tictactoe_private_room';
         let roomId = config.inviteCode;
-
+        let room: Colyseus.Room;
+        
         try {
             console.log(`joining ${roomName}`);
-            await this.SERVER.connect(roomName, { roomId, online });
+            room = await this.SERVER.connect(roomName, { roomId, online });
         }
         catch(e) {
             console.error(`unable to join ${roomName}. Returning to lobby`, e);
@@ -54,6 +55,7 @@ export class GameScene extends BaseScene
         this.onScreenResized(() => {
             this.drawBoard();
             this.drawMarkers();
+            this.handleRoomStateChange(room);
         });
 
         this.drawBoard();
@@ -97,7 +99,7 @@ export class GameScene extends BaseScene
     }
 
     private handleRoomStateChange = (room: Colyseus.Room) => {
-
+     
         this.setMatch(`${room.state.playerX?.name} vs ${room.state.playerO?.name}`);
         
         if(!room.state.ready) {
