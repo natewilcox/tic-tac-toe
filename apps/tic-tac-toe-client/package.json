@@ -29,7 +29,7 @@
   
   "dependencies": {
     "@natewilcox/nathan-core": "^0.0.2",
-    "@natewilcox/phaser-nathan": "^0.0.13",
+    "@natewilcox/phaser-nathan": "^0.0.16",
     "@natewilcox/tic-tac-toe-shared": "*",
     "buffer": "^6.0.3",
     "dotenv": "^16.3.1",

@@ -60,13 +60,7 @@ export class GameScene extends Nathan.Scene
         this.configureStateListeners();
 
         if(config.invite) {
-
-            //send invite
-            const inviteUrl = `https://tic-tac-toe.natewilcox.io?invite=${this.SERVER.RoomId}`;
-            var smsUri = 'sms:?body=' + encodeURIComponent(`I challenge you at ${inviteUrl}`);
-
-            // Open the messaging app with the default message
-            window.open(smsUri, '_blank');
+            Nathan.sendSMSInvite('https://tic-tac-toe.natewilcox.io', this.SERVER.RoomId);
         }
 
         this.events.on(Phaser.Scenes.Events.SHUTDOWN, () => {
@@ -187,33 +181,33 @@ export class GameScene extends Nathan.Scene
         }
         const matchTextPos = portrait ? 50 : 20;
         const matchTextSize = portrait ? '15px' : '25px';
-        this.match = this.addText(centerX, matchTextPos, 'Red Vs. Blue', matchTextSize, '#FFFFFF');
+        this.match = Nathan.addText(this, 'Red Vs. Blue', centerX, matchTextPos, { size: matchTextSize });
 
         if(this.back) {
             this.back.off('pointerdown');
             this.back.destroy();
         }
-        this.back = this.addText(40, canvas.height - 20, 'BACK', '20px', '#FFFFFF', this.handleBack);
+        this.back = Nathan.addText(this, 'BACK', 40, canvas.height - 20, { size: '20px' }, this.handleBack);
 
         if(this.status) {
             this.status.destroy();
         }
         const statusTextPos = portrait ? canvas.height - 50 : canvas.height - 20;
-        this.status = this.addText(centerX, statusTextPos, 'waiting for players...', '20px', '#FFFFFF');
+        this.status = Nathan.addText(this, 'waiting for players...', centerX, statusTextPos, { size: '20px' });
 
         if(this.rematch) {
             this.rematch.off('pointerdown');
             this.rematch.destroy();
         }
         const rematchTextPos = portrait ? canvas.height - 20 : canvas.height - 20;
-        this.rematch = this.addText(canvas.width - 100, rematchTextPos, 'REMATCH?', '20px', '#FFFFFF', this.handleRematch);
+        this.rematch = Nathan.addText(this, 'REMATCH?', canvas.width - 100, rematchTextPos, { size: '20px' }, this.handleRematch);
         this.rematch.setVisible(false);
 
         if(this.rematchBadge) {
             this.rematchBadge.destroy();
         }
         const rematchBadgePos = portrait ? canvas.height - 23 : canvas.height - 23;
-        this.rematchBadge = this.addImage(canvas.width - 25, rematchBadgePos, 'rematch')
+        this.rematchBadge = Nathan.addImage(this, 'rematch', canvas.width - 25, rematchBadgePos, {});
         this.rematchBadge.setVisible(false);
         
         //draw actual board
@@ -315,38 +309,5 @@ export class GameScene extends Nathan.Scene
 
             console.log(`Placed '${marker}' at (${x}, ${y})`);
         }
-    }
-
-    addImage(x: number, y: number, frame: string, cb?: () => void) {
-
-        const img = this.add.image(x, y, frame);
-        img.setScale(0.5, 0.5);
-        img.setOrigin(0.5);
-
-        if(cb) {
-            img.setInteractive();
-            img.on('pointerdown', cb);
-        }
-
-        return img;
-    }
-
-    addText(x: number, y: number, txt: string, size: string, color: string, cb?: () => void) {
-
-        const gameText = this.add.text(x, y, txt, {
-            fontSize: size,
-            fontFamily: 'Arial',
-            color: color,
-            align: 'center'
-        });
-
-        gameText.setOrigin(0.5);
-
-        if(cb) {
-            gameText.setInteractive();
-            gameText.on('pointerdown', cb);
-        }
-
-        return gameText;
     }
 }
