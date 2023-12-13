@@ -1,8 +1,7 @@
 {
   "name": "@natewilcox/tic-tac-toe-server",
-  "version": "0.0.18",
+  "version": "0.0.19",
   "description": "The server-side application for a multiplayer Tic Tac Toe game. It manages game state, player interactions, and communicates with the client-side application.",
-  
   "author": "Nathan Wilcox",
   "license": "GPL-3.0",
   "repository": {
@@ -18,19 +17,16 @@
     "tic-tac-toe",
     "server"
   ],
-
   "staticFiles": {
     "staticPath": "public"
   },
   "main": "dist/main.js",
   "types": "dist/main.d.ts",
-
   "scripts": {
     "clean": "npx rimraf dist && npx rimraf tsconfig.tsbuildinfo",
     "build": "tsc",
     "build:watch": "tsc -w"
   },
-
   "devDependencies": {
     "@colyseus/testing": "^0.15.0",
     "@types/mocha": "^10.0.1",
