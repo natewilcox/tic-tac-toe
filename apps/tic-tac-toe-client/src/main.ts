@@ -1,6 +1,11 @@
 import Phaser from "phaser";
+import * as data from "./version.json";
 import * as Nathan from "@natewilcox/phaser-nathan";
 import { GameScene } from "./scenes/GameScene";
+import { addBuildInfo } from "@natewilcox/version-meta";
+
+// adds build info to the window object
+addBuildInfo(data);
 
 const config = {
     type: Phaser.AUTO,
