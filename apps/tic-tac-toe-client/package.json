@@ -1,6 +1,6 @@
 {
   "name": "@natewilcox/tic-tac-toe-client",
-  "version": "0.0.19",
+  "version": "0.0.20",
   "description": "The client-side application for a multiplayer Tic Tac Toe game, built with Phaser. It communicates with a server to manage game state and player interactions.",
   "author": "Nathan Wilcox",
   "license": "GPL-3.0",
