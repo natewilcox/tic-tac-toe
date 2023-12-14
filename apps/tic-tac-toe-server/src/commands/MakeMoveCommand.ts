@@ -3,6 +3,7 @@ import { PublicRoom } from "../rooms/PublicRoom";
 import { AIMoveCommand } from "./AIMoveCommand";
 import { ArraySchema } from "@colyseus/schema";
 import { ServerMessages } from "@natewilcox/tic-tac-toe-shared";
+import { checkWinner, cpuReadyUp, printBoard } from "../utils/GameUtils";
 
 type Payload = {
     client?: any,
@@ -25,17 +26,18 @@ export class MakeMoveCommand extends Command<PublicRoom, Payload> {
 
         //board state is a 1-dimensional array. map the xy coords to cell in array
         this.room.state.boardState[(y*3) + x] = marker;
-
         console.log(`--Player setting [${x},${y}] to ${marker}--`);
-        console.log(`${this.state.boardState[0]},${this.state.boardState[1]},${this.state.boardState[2]}`);
-        console.log(`${this.state.boardState[3]},${this.state.boardState[4]},${this.state.boardState[5]}`);
-        console.log(`${this.state.boardState[6]},${this.state.boardState[7]},${this.state.boardState[8]}`);
+        printBoard(this.room.state.boardState);
 
-        //check for winner
-        if(this.checkWinner(this.room.state.boardState)) {
+        //check for winner after player move
+        if(checkWinner(this.room.state.boardState)) {
+            
             console.log(`${client.id} won!`);
             this.room.state.winner = client.id;
             this.room.CLIENT.send(ServerMessages.MoveMade, { x, y, marker });
+
+            cpuReadyUp(this.room.state);
+
             return;
         }
 
@@ -44,6 +46,9 @@ export class MakeMoveCommand extends Command<PublicRoom, Payload> {
             console.log("game ended in tie");
             this.room.state.winner = 'tie';
             this.room.CLIENT.send(ServerMessages.MoveMade, { x, y, marker });
+
+            cpuReadyUp(this.room.state);
+
             return;
         }
 
@@ -63,41 +68,4 @@ export class MakeMoveCommand extends Command<PublicRoom, Payload> {
 
         this.room.CLIENT.send(ServerMessages.MoveMade, { x, y, marker });
     }
-
-    //AI Generated Method to check for winner
-    private checkWinner = (board: ArraySchema<string>) => {
-     
-        for (let row = 0; row < 3; row++) {
-            if (
-                board[row * 3] === board[row * 3 + 1] &&
-                board[row * 3] === board[row * 3 + 2] &&
-                board[row * 3] !== ' '
-            ) {
-                return board[row * 3];
-            }
-        }
-      
-        for (let col = 0; col < 3; col++) {
-            if (
-                board[col] === board[col + 3] &&
-                board[col] === board[col + 6] &&
-                board[col] !== ' '
-            ) {
-                return board[col];
-            }
-        }
-      
-        // Check diagonals
-        if (
-            (board[0] === board[4] && board[0] === board[8]) ||
-            (board[2] === board[4] && board[2] === board[6])
-            ) {
-            if (board[4] !== ' ') {
-                return board[4];
-            }
-        }
-      
-        // If no winner is found, return null
-        return null;
-      }
 }

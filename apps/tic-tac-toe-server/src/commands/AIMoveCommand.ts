@@ -2,6 +2,7 @@ import { Command } from "@colyseus/command";
 import { PublicRoom } from "../rooms/PublicRoom";
 import { ArraySchema } from "@colyseus/schema";
 import { ServerMessages } from "@natewilcox/tic-tac-toe-shared";
+import { checkWinner, cpuReadyUp, numberToXYCoordinate } from "../utils/GameUtils";
 
 const Minimax = require('tic-tac-toe-minimax');
 
@@ -38,8 +39,8 @@ export class AIMoveCommand extends Command<PublicRoom, Payload> {
 
             console.log(`Checking best move for ${currentPlayer}`);
             const nextMove = Minimax.default.ComputerMove(board, symbols, difficulty);
-            const x = this.numberToXYCoordinate(nextMove).y;
-            const y = this.numberToXYCoordinate(nextMove).x;
+            const x = numberToXYCoordinate(nextMove).y;
+            const y = numberToXYCoordinate(nextMove).x;
             this.room.state.boardState[nextMove] = currentPlayer;
 
             console.log(`--AI setting [${x},${y}] to ${currentPlayer}--`);
@@ -50,68 +51,24 @@ export class AIMoveCommand extends Command<PublicRoom, Payload> {
             this.room.state.currentTurn = currentPlayer == 'X' ? this.room.state.playerO.client?.id : this.room.state.playerX.client?.id;
 
             //check for winner
-            if(this.checkWinner(this.room.state.boardState)) {
-                console.log('cpu won the game');
+            if(checkWinner(this.room.state.boardState)) {
+
+                console.log("cpu won");
                 this.room.state.winner = "cpu";
+
+                cpuReadyUp(this.room.state);
             }
 
             //if no one wins after last move, everyone loses.
             if(this.room.state.boardState.find(c => c != 'X' && c != 'O') == null) {
                 console.log("game ended in tie");
                 this.room.state.winner = 'tie';
+                
+                cpuReadyUp(this.room.state);
             }
 
             this.room.CLIENT.send(ServerMessages.MoveMade, { x, y, marker: currentPlayer });
         }, 1000);
-    }
-
-    private numberToXYCoordinate = (number: number)=> {
-        if (number < 0 || number > 8) {
-          throw new Error('Number must be in the range of 0 to 8');
-        }
-      
-        const x = Math.floor(number / 3);
-        const y = number % 3;
-      
-        return { x, y };
-    }
-
-
-      
-    private checkWinner = (board: ArraySchema<string>) => {
-     
-      for (let row = 0; row < 3; row++) {
-          if (
-              board[row * 3] === board[row * 3 + 1] &&
-              board[row * 3] === board[row * 3 + 2] &&
-              board[row * 3] !== ' '
-          ) {
-              return board[row * 3];
-          }
-      }
-    
-      for (let col = 0; col < 3; col++) {
-          if (
-              board[col] === board[col + 3] &&
-              board[col] === board[col + 6] &&
-              board[col] !== ' '
-          ) {
-              return board[col];
-          }
-      }
-    
-      // Check diagonals
-      if (
-          (board[0] === board[4] && board[0] === board[8]) ||
-          (board[2] === board[4] && board[2] === board[6])
-          ) {
-          if (board[4] !== ' ') {
-              return board[4];
-          }
-      }
-    
-      // If no winner is found, return null
-      return null;
     }
 }
 

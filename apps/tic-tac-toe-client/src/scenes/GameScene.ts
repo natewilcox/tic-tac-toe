@@ -25,6 +25,10 @@ export class GameScene extends Nathan.Scene
         super('game');
     }
 
+    preload() {
+        this.load.image('rematch', 'images/rematch.png');
+    }
+
     async create(config?: any) {
         super.create();
         Nathan.resizeToScreen(this, true, 800, 800);
@@ -207,7 +211,7 @@ export class GameScene extends Nathan.Scene
             this.rematchBadge.destroy();
         }
         const rematchBadgePos = portrait ? canvas.height - 23 : canvas.height - 23;
-        this.rematchBadge = Nathan.addImage(this, 'rematch', canvas.width - 25, rematchBadgePos, {});
+        this.rematchBadge = Nathan.addImage(this, 'rematch', canvas.width - 25, rematchBadgePos, { scale: 0.5 });
         this.rematchBadge.setVisible(false);
         
         //draw actual board

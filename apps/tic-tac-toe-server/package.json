@@ -28,7 +28,7 @@
     "build:watch": "tsc -w"
   },
   "devDependencies": {
-    "@colyseus/testing": "^0.15.0",
+    "@colyseus/testing": "^0.15.2",
     "@types/mocha": "^10.0.1",
     "mocha": "^10.2.0",
     "rimraf": "^5.0.0",
@@ -41,7 +41,7 @@
     "@natewilcox/colyseus-nathan": "^0.0.1",
     "@natewilcox/nathan-core": "^0.0.2",
     "@natewilcox/tic-tac-toe-shared": "*",
-    "colyseus": "^0.15.8",
+    "colyseus": "^0.15.13",
     "phaser": "^3.55.2",
     "tic-tac-toe-minimax": "^1.0.8"
   }
