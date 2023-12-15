@@ -99,6 +99,8 @@ export class GameScene extends Nathan.Scene
     
             console.log('subscription=', JSON.stringify(subscription));
             const payload = JSON.stringify(subscription);
+            console.log('payload=', payload);
+            
             this.SERVER.send(ClientMessages.SetSubscription, {
                 subscription: payload
             });
@@ -282,8 +284,7 @@ export class GameScene extends Nathan.Scene
             }
 
             console.log(`selecting [${x},${y}]`);
-            console.log(ClientMessages.SetSubscription)
-            this.SERVER.send(ClientMessages.SetSubscription, { x, y });
+            this.SERVER.send(ClientMessages.MakeMove, { x, y });
         });
     };
 
