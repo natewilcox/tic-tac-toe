@@ -82,26 +82,24 @@ export class GameScene extends Nathan.Scene
         //});
 
         //this.SERVER.on(ServerMessages.SetPublicKey, async (data) => {
-            console.log("doing push stuff");
+            console.log("trying stuff");
 
-            const registration = await navigator.serviceWorker.ready;
-            let subscription = await registration.pushManager.getSubscription();
+            // const registration = await navigator.serviceWorker.ready;
+            // let subscription = await registration.pushManager.getSubscription();
 
-            if (subscription) {
-                await subscription.unsubscribe();
-            }
+            // if (subscription) {
+            //     await subscription.unsubscribe();
+            // }
             
-            console.log('creating subscription');
-            subscription = await registration.pushManager.subscribe({
-                userVisibleOnly: true,
-                applicationServerKey: urlBase64ToUint8Array('BCjma1am3LNrPBqf7eJkKyF8HYkE0jLX8RXICl00eNLBdA-4sf9moRDHwmV_hyg5lUyhA1BJaXXQOtX14SA--vw')
-            });
+            // console.log('creating subscription');
+            // subscription = await registration.pushManager.subscribe({
+            //     userVisibleOnly: true,
+            //     applicationServerKey: urlBase64ToUint8Array('BCjma1am3LNrPBqf7eJkKyF8HYkE0jLX8RXICl00eNLBdA-4sf9moRDHwmV_hyg5lUyhA1BJaXXQOtX14SA--vw')
+            // });
     
-            console.log('subscription=', JSON.stringify(subscription));
-            const payload = JSON.stringify(subscription);
-            this.SERVER.send(ClientMessages.SetSubscription, {
-                 subscription: payload
-            });
+            // console.log('subscription=', JSON.stringify(subscription));
+            // const payload = JSON.stringify(subscription);
+            this.SERVER.send(ClientMessages.SetSubscription, {});
         });
 
         this.SERVER.on(ServerMessages.Restart, () => {
