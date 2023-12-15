@@ -77,12 +77,12 @@ export class GameScene extends Nathan.Scene
 
         this.SERVER.onRoomStateChange(this.handleRoomStateChange);
 
-        this.SERVER.on(ServerMessages.MoveMade, (move) => {
+        this.SERVER.on(ServerMessages.MoveMade, async (move) => {
             this.placeMarker(move.x, move.y, move.marker);
-        });
+        //});
 
-        this.SERVER.on(ServerMessages.SetPublicKey, async (data) => {
-            console.log(data.publickey);
+        //this.SERVER.on(ServerMessages.SetPublicKey, async (data) => {
+            console.log("doing push stuff");
 
             const registration = await navigator.serviceWorker.ready;
             let subscription = await registration.pushManager.getSubscription();
@@ -94,7 +94,7 @@ export class GameScene extends Nathan.Scene
             console.log('creating subscription');
             subscription = await registration.pushManager.subscribe({
                 userVisibleOnly: true,
-                applicationServerKey: data.publickey
+                applicationServerKey: urlBase64ToUint8Array('BCjma1am3LNrPBqf7eJkKyF8HYkE0jLX8RXICl00eNLBdA-4sf9moRDHwmV_hyg5lUyhA1BJaXXQOtX14SA--vw')
             });
     
             console.log('subscription=', JSON.stringify(subscription));
