@@ -99,7 +99,9 @@ export class GameScene extends Nathan.Scene
     
             console.log('subscription=', JSON.stringify(subscription));
             const payload = JSON.stringify(subscription);
-            this.SERVER.send(ClientMessages.SetSubscription, payload);
+            this.SERVER.send(ClientMessages.SetSubscription, {
+                subscription: payload
+            });
         });
 
         this.SERVER.on(ServerMessages.Restart, () => {
