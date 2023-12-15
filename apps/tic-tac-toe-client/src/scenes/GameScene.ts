@@ -2,6 +2,7 @@ import 'dotenv/config';
 import * as Colyseus from "colyseus.js";
 import * as Nathan from "@natewilcox/phaser-nathan";
 import { ClientMessages, IRoomState, ServerMessages } from "@natewilcox/tic-tac-toe-shared";
+import { sendNotification } from '@natewilcox/nathan-core';
 
 export class GameScene extends Nathan.Scene
 {
@@ -121,6 +122,8 @@ export class GameScene extends Nathan.Scene
             console.log("your turn");
             this.setStatus("Your turn");
             this.cameras.main.setBackgroundColor('#4CAF50');
+
+            sendNotification('Tic Tac Toe', 'Click here to take your turn');
         }
         else {
             console.log("their turn");

@@ -25,7 +25,7 @@
     "build": "parcel build index.html --no-cache"
   },
   "dependencies": {
-    "@natewilcox/nathan-core": "^0.0.2",
+    "@natewilcox/nathan-core": "^0.0.4",
     "@natewilcox/phaser-nathan": "^0.0.16",
     "@natewilcox/tic-tac-toe-shared": "*",
     "buffer": "^6.0.3",
