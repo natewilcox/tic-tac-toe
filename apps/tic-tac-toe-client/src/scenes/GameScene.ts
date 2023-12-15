@@ -280,6 +280,7 @@ export class GameScene extends Nathan.Scene
             }
 
             console.log(`selecting [${x},${y}]`);
+            console.log(ClientMessages.SetSubscription)
             this.SERVER.send(ClientMessages.SetSubscription, { x, y });
         });
     };
