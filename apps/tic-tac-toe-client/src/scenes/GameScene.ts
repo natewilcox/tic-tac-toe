@@ -79,9 +79,9 @@ export class GameScene extends Nathan.Scene
 
         this.SERVER.on(ServerMessages.MoveMade, async (move) => {
             this.placeMarker(move.x, move.y, move.marker);
-        //});
+        });
 
-        //this.SERVER.on(ServerMessages.SetPublicKey, async (data) => {
+        this.SERVER.on(ServerMessages.SetPublicKey, async (data) => {
             console.log("trying stuff");
 
             const registration = await navigator.serviceWorker.ready;
