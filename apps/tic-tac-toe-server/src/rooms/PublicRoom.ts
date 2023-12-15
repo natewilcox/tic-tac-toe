@@ -9,13 +9,13 @@ import { ClientService } from "@natewilcox/colyseus-nathan";
 import { ClientMessages, ServerMessages } from "@natewilcox/tic-tac-toe-shared";
 import * as webpush from 'web-push';
 
-const vapidKeys = webpush.generateVAPIDKeys();
+const publickey = "BCjma1am3LNrPBqf7eJkKyF8HYkE0jLX8RXICl00eNLBdA-4sf9moRDHwmV_hyg5lUyhA1BJaXXQOtX14SA--vw";
+const privatekey = "L-oG0LJMdU46jnIs1DbN17SdYPKG_8Xh7bTxYjrdDLo";
 
-console.log(vapidKeys)
 webpush.setVapidDetails(
     'mailto:natewilcox@gmail.com',
-    vapidKeys.publicKey,
-    vapidKeys.privateKey
+    publickey,
+    privatekey
 );
 
 export class PublicRoom extends Room<RoomState> {
@@ -82,7 +82,7 @@ export class PublicRoom extends Room<RoomState> {
 
         console.log("sending public key");
         this.CLIENT.send(ServerMessages.SetPublicKey, {
-            publickey: vapidKeys.publicKey
+            publickey: publickey
         });
     }
 
