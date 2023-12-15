@@ -3,8 +3,7 @@
   "compilerOptions": {
     "composite": true,
     "rootDir": "src",
-    "outDir": "dist",
-    "module": "es2020"
+    "outDir": "dist"
   },
   "include": [
     "src"
