@@ -41,7 +41,7 @@
     "@faker-js/faker": "^8.3.1",
     "@natewilcox/colyseus-nathan": "^0.0.1",
     "@natewilcox/nathan-core": "^0.0.2",
-    "@natewilcox/tic-tac-toe-shared": "*",
+    "@natewilcox/tic-tac-toe-shared": "0.0.32",
     "colyseus": "^0.15.13",
     "phaser": "^3.55.2",
     "tic-tac-toe-minimax": "^1.0.8",
