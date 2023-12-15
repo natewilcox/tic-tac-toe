@@ -45,7 +45,8 @@ export class PublicRoom extends Room<RoomState> {
             });
         });
 
-        console.log(ClientMessages.SetSubscription)
+        console.log(ClientMessages)
+        console.log(ServerMessages)
         this.CLIENT.on(ClientMessages.SetSubscription, async (client, data) => {
 
             const subscription = JSON.parse(data.subscription);

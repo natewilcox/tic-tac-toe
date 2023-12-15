@@ -2,5 +2,7 @@ export enum ServerMessages {
     SendMessage,
     MoveMade,
     Restart,
-    SetPublicKey
+    SetPublicKey,
+    addSubscription,
+    removeSubscription
 }
