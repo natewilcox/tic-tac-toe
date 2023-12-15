@@ -6,7 +6,17 @@ import { LeaveCommand } from "../commands/LeaveCommand";
 import { MakeMoveCommand } from "../commands/MakeMoveCommand";
 import { RematchCommand } from "../commands/RematchCommand";
 import { ClientService } from "@natewilcox/colyseus-nathan";
-import { ClientMessages } from "@natewilcox/tic-tac-toe-shared";
+import { ClientMessages, ServerMessages } from "@natewilcox/tic-tac-toe-shared";
+import * as webpush from 'web-push';
+
+const vapidKeys = webpush.generateVAPIDKeys();
+
+console.log(vapidKeys)
+webpush.setVapidDetails(
+    'mailto:natewilcox@gmail.com',
+    vapidKeys.publicKey,
+    vapidKeys.privateKey
+);
 
 export class PublicRoom extends Room<RoomState> {
   
@@ -34,12 +44,44 @@ export class PublicRoom extends Room<RoomState> {
                 client
             });
         });
+
+        this.CLIENT.on(ClientMessages.SetSubscription, async (client, data) => {
+
+            const subscription = JSON.parse(data.subscription);
+            console.log("subscription", subscription);
+
+            this.clock.setTimeout(async () => {
+
+                const payload = JSON.stringify({
+                    title: 'test',
+                    body: 'test'
+                });
+    
+                try {
+                    console.log("sending notification")
+                    console.log('Subscription:', subscription);
+                    console.log('Payload:', payload);
+
+                    await webpush.sendNotification(subscription, payload)
+                }
+                catch (err: any) {
+                    console.log('Error message:', err.message);
+                    console.log('Status code:', err.statusCode);
+                    console.log('Stack trace:', err.stack);
+                }
+
+            }, 5000);
+        });
     }
 
     onJoin (client: Client, options: any) {
         console.log(client.sessionId, "joined!");
         this.dispatcher.dispatch(new JoinCommand(), {
             client
+        });
+
+        this.CLIENT.send(ServerMessages.SetPublicKey, {
+            publickey: vapidKeys.publicKey
         });
     }
 

@@ -1,5 +1,6 @@
 export enum ClientMessages {
     SendMessage,
     MakeMove,
-    Rematch
+    Rematch,
+    SetSubscription
 }

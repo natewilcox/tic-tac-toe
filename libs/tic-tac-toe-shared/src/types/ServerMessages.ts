@@ -1,5 +1,6 @@
 export enum ServerMessages {
     SendMessage,
     MoveMade,
-    Restart
+    Restart,
+    SetPublicKey
 }

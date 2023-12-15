@@ -70,7 +70,7 @@ export class GameScene extends Nathan.Scene
 
         this.events.on(Phaser.Scenes.Events.SHUTDOWN, () => {
             this.input.off('pointerdown');
-        })
+        });
     }
 
     private configureStateListeners = () => {
@@ -79,6 +79,29 @@ export class GameScene extends Nathan.Scene
 
         this.SERVER.on(ServerMessages.MoveMade, (move) => {
             this.placeMarker(move.x, move.y, move.marker);
+        });
+
+        this.SERVER.on(ServerMessages.SetPublicKey, async (data) => {
+            console.log(data.publickey);
+
+            const registration = await navigator.serviceWorker.ready;
+            let subscription = await registration.pushManager.getSubscription();
+
+            if (subscription) {
+                await subscription.unsubscribe();
+            }
+            
+            console.log('creating subscription');
+            subscription = await registration.pushManager.subscribe({
+                userVisibleOnly: true,
+                applicationServerKey: data.publickey
+            });
+    
+            console.log('subscription=', JSON.stringify(subscription));
+            const payload = JSON.stringify(subscription);
+            this.SERVER.send(ClientMessages.SetSubscription, {
+                 subscription: payload
+            });
         });
 
         this.SERVER.on(ServerMessages.Restart, () => {
@@ -96,7 +119,7 @@ export class GameScene extends Nathan.Scene
     }
 
     private handleRoomStateChange = (room: Colyseus.Room) => {
-     
+       
         this.setMatch(`${room.state.playerX?.name} vs ${room.state.playerO?.name}`);
         
         if(!room.state.ready) {
@@ -317,4 +340,19 @@ export class GameScene extends Nathan.Scene
             console.log(`Placed '${marker}' at (${x}, ${y})`);
         }
     }
+}
+
+function urlBase64ToUint8Array(base64String: string) {
+    var padding = '='.repeat((4 - base64String.length % 4) % 4);
+    var base64 = (base64String + padding)
+        .replace(/\-/g, '+')
+        .replace(/_/g, '/');
+
+    var rawData = window.atob(base64);
+    var outputArray = new Uint8Array(rawData.length);
+
+    for (var i = 0; i < rawData.length; ++i) {
+        outputArray[i] = rawData.charCodeAt(i);
+    }
+    return outputArray;
 }

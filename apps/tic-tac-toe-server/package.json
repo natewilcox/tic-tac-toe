@@ -30,6 +30,7 @@
   "devDependencies": {
     "@colyseus/testing": "^0.15.2",
     "@types/mocha": "^10.0.1",
+    "@types/web-push": "^3.6.3",
     "mocha": "^10.2.0",
     "rimraf": "^5.0.0",
     "tsx": "^3.12.6",
@@ -43,6 +44,7 @@
     "@natewilcox/tic-tac-toe-shared": "*",
     "colyseus": "^0.15.13",
     "phaser": "^3.55.2",
-    "tic-tac-toe-minimax": "^1.0.8"
+    "tic-tac-toe-minimax": "^1.0.8",
+    "web-push": "^3.6.6"
   }
 }

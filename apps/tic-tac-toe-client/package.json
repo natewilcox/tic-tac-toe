@@ -16,6 +16,7 @@
     "tic-tac-toe",
     "client"
   ],
+  "type": "module",
   "staticFiles": {
     "staticPath": "public"
   },
