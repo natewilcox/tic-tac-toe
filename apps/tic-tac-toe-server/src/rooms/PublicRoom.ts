@@ -80,6 +80,7 @@ export class PublicRoom extends Room<RoomState> {
             client
         });
 
+        console.log("sending public key");
         this.CLIENT.send(ServerMessages.SetPublicKey, {
             publickey: vapidKeys.publicKey
         });
