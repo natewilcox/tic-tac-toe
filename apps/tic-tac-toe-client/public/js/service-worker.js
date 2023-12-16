@@ -1,5 +1,6 @@
 console.log("Service worker loaded...");
-self.addEventListener('push', event => {
+self.addEventListener('push', async event => {
+    console.log("push event", event);
 
     const data = event.data.json();
     console.log('New notification', data);
@@ -12,7 +13,15 @@ self.addEventListener('push', event => {
         badge: '../images/icon.png',
     };
 
-    event.waitUntil(self.registration.showNotification(data.title, options));
+    console.log('Notification options', options);
+
+    const clientList = await self.clients.matchAll();
+    if (clientList.some(client => client.visibilityState === 'visible')) {
+        console.log('Not showing notification because the window is visible');
+    } 
+    else {
+        event.waitUntil(self.registration.showNotification(data.title, options));
+    }
 });
 
 self.addEventListener('install', function(event) {
