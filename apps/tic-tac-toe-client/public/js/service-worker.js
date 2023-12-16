@@ -47,7 +47,7 @@ self.addEventListener('notificationclick', async function(event) {
         for (let client of clientList) {
 
             console.log('client url', client.url);
-            if (client.url == '/?' && 'focus' in client) {
+            if (client.url.includes('tic-tac-toe.natewilcox.io') && 'focus' in client) {
 
                 console.log('client focus');
                 return client.focus();
