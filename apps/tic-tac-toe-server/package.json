@@ -1,6 +1,6 @@
 {
   "name": "@natewilcox/tic-tac-toe-server",
-  "version": "0.0.47",
+  "version": "0.0.48",
   "description": "The server-side application for a multiplayer Tic Tac Toe game. It manages game state, player interactions, and communicates with the client-side application.",
   "author": "Nathan Wilcox",
   "license": "GPL-3.0",
