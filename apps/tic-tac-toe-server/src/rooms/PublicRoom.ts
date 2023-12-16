@@ -41,9 +41,10 @@ export class PublicRoom extends Room<RoomState> {
         this.CLIENT.on(ClientMessages.SetSubscription, async (client, data) => {
 
             const subscription = JSON.parse(data.subscription);
-            const player = this.state.playerX?.client === client ? this.state.playerX : this.state.playerO;
+            const player = this.state.playerX?.client?.id === client?.id ? this.state.playerX : this.state.playerO;
 
-            console.log("recieving subscription", subscription);
+            const name = this.state.playerX?.client?.id === client?.id ? "playerX" : "playerO";
+            console.log("recieving subscription", subscription, "from", name);
             player.subscription = subscription;
         });
     }
