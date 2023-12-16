@@ -35,6 +35,7 @@ self.addEventListener('activate', function(event) {
 self.addEventListener('notificationclick', async function(event) {
     event.notification.close(); // Close the notification
   
+    console.log('Notification click', event);
     // This looks to see if the current is already open and focuses if it is
     event.waitUntil((async () => {
 
@@ -42,13 +43,19 @@ self.addEventListener('notificationclick', async function(event) {
             type: "window"
         });
     
+        console.log('Client list', clientList);
         for (let client of clientList) {
+
+            console.log('client url', client.url);
             if (client.url == '/?' && 'focus' in client) {
+
+                console.log('client focus');
                 return client.focus();
             }
         }
     
         if (self.clients.openWindow) {
+            console.log('client open window');
             return self.clients.openWindow('/');
         }
     })());
