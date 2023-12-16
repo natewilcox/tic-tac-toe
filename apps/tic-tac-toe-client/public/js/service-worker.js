@@ -9,8 +9,7 @@ self.addEventListener('push', event => {
       body: data.body,
       requireInteraction: true,
       vibrate: [200, 100, 200, 100, 200, 100, 200],
-      icon: 'icon.png',
-      //badge: 'images/notification-badge.png'
+      icon: '../images/icon.png'
     };
   
     event.waitUntil(self.registration.showNotification(data.title, options));
