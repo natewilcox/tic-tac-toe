@@ -8,6 +8,7 @@ self.addEventListener('push', event => {
     const options = {
       body: data.body,
       requireInteraction: true,
+      vibrate: [200, 100, 200, 100, 200, 100, 200],
       //icon: 'images/notification-icon.png',
       //badge: 'images/notification-badge.png'
     };
