@@ -6,7 +6,8 @@ self.addEventListener('push', event => {
     console.log('New notification', data);
 
     const options = {
-      body: data.body
+      body: data.body,
+      requireInteraction: true,
       //icon: 'images/notification-icon.png',
       //badge: 'images/notification-badge.png'
     };
