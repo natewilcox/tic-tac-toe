@@ -9,7 +9,7 @@ self.addEventListener('push', event => {
       body: data.body,
       requireInteraction: true,
       vibrate: [200, 100, 200, 100, 200, 100, 200],
-      //icon: 'images/notification-icon.png',
+      icon: 'icon.png',
       //badge: 'images/notification-badge.png'
     };
   
