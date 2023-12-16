@@ -43,7 +43,7 @@ self.addEventListener('notificationclick', async function(event) {
         });
     
         for (let client of clientList) {
-            if (client.url == '/' && 'focus' in client) {
+            if (client.url == '/?' && 'focus' in client) {
                 return client.focus();
             }
         }
