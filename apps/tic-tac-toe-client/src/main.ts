@@ -60,6 +60,20 @@ const menuConfig: Nathan.BasicMenuSceneConfig = {
 //start menu with configured menu items
 game.scene.start('menu', menuConfig);
 
+async function unregisterServiceWorker() {
+
+    const existingRegistration = await navigator.serviceWorker.getRegistration();
+  
+    if (existingRegistration) {
+        console.log('Service worker already registered with scope:', existingRegistration.scope);
+        await existingRegistration.unregister();
+        console.log('ServiceWorker unregistered successful');
+    } 
+    else {
+        console.log('Service worker not registered');
+    }
+}
+
 async function registerServiceWorker() {
 
     const existingRegistration = await navigator.serviceWorker.getRegistration();
@@ -74,4 +88,5 @@ async function registerServiceWorker() {
     }
 }
 
+unregisterServiceWorker();
 registerServiceWorker();

@@ -1,6 +1,5 @@
 console.log("Service worker loaded...");
 self.addEventListener('push', event => {
-    console.log("push event", event);
 
     const data = event.data.json();
     console.log('New notification', data);
