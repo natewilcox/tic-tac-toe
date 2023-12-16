@@ -14,14 +14,7 @@ self.addEventListener('push', async event => {
     };
 
     console.log('Notification options', options);
-
-    const clientList = await self.clients.matchAll();
-    if (clientList.some(client => client.visibilityState === 'visible')) {
-        console.log('Not showing notification because the window is visible');
-    } 
-    else {
-        event.waitUntil(self.registration.showNotification(data.title, options));
-    }
+    self.registration.showNotification(data.title, options);
 });
 
 self.addEventListener('install', function(event) {
@@ -36,6 +29,7 @@ self.addEventListener('notificationclick', async function(event) {
     event.notification.close(); // Close the notification
   
     console.log('Notification click', event);
+    
     // This looks to see if the current is already open and focuses if it is
     event.waitUntil((async () => {
 
@@ -59,4 +53,4 @@ self.addEventListener('notificationclick', async function(event) {
             return self.clients.openWindow('/');
         }
     })());
-  });
+});

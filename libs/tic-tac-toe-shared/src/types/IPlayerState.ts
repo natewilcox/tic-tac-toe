@@ -6,4 +6,5 @@ export interface IPlayerState extends Schema {
     client: any;
     name: string;
     offerRematch: boolean;
+    subscription: any;
 }

@@ -2,7 +2,7 @@ import { Command } from "@colyseus/command";
 import { PublicRoom } from "../rooms/PublicRoom";
 import { ArraySchema } from "@colyseus/schema";
 import { ServerMessages } from "@natewilcox/tic-tac-toe-shared";
-import { checkWinner, cpuReadyUp, numberToXYCoordinate } from "../utils/GameUtils";
+import { checkWinner, cpuReadyUp, numberToXYCoordinate, sendPushNotification } from "../utils/GameUtils";
 
 const Minimax = require('tic-tac-toe-minimax');
 
@@ -48,8 +48,11 @@ export class AIMoveCommand extends Command<PublicRoom, Payload> {
             console.log(`${this.state.boardState[3]},${this.state.boardState[4]},${this.state.boardState[5]}`);
             console.log(`${this.state.boardState[6]},${this.state.boardState[7]},${this.state.boardState[8]}`);
 
-            this.room.state.currentTurn = currentPlayer == 'X' ? this.room.state.playerO.client?.id : this.room.state.playerX.client?.id;
+            const nextPlayer = currentPlayer == 'X' ? this.room.state.playerO : this.room.state.playerX;
+            this.room.state.currentTurn = currentPlayer == 'X' ? nextPlayer.client?.id : nextPlayer.client?.id;
 
+            sendPushNotification(nextPlayer.subscription, "Your Turn", "It's your turn to play!");
+            
             //check for winner
             if(checkWinner(this.room.state.boardState)) {
 
@@ -68,7 +71,7 @@ export class AIMoveCommand extends Command<PublicRoom, Payload> {
             }
 
             this.room.CLIENT.send(ServerMessages.MoveMade, { x, y, marker: currentPlayer });
-        }, 1000);
+        }, 3000);
     }
 }
 

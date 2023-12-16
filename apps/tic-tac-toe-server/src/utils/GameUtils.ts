@@ -1,5 +1,15 @@
 import { ArraySchema } from "@colyseus/schema";
 import { RoomState } from "../rooms/schema/RoomState";
+import * as webpush from 'web-push';
+
+const publickey = "BCjma1am3LNrPBqf7eJkKyF8HYkE0jLX8RXICl00eNLBdA-4sf9moRDHwmV_hyg5lUyhA1BJaXXQOtX14SA--vw";
+const privatekey = "L-oG0LJMdU46jnIs1DbN17SdYPKG_8Xh7bTxYjrdDLo";
+
+webpush.setVapidDetails(
+    'mailto:natewilcox@gmail.com',
+    publickey,
+    privatekey
+);
 
 export const checkWinner = (board: ArraySchema<string>) => {
      
@@ -63,5 +73,24 @@ export const cpuReadyUp = (roomState: RoomState) => {
     else if (roomState.playerX.isCPU) {
         console.log("CPU wants to play again");
         roomState.playerX.offerRematch = true;
+    }
+}
+
+export async function sendPushNotification(subscription: any, title: string, body: string) {
+
+    const payload = JSON.stringify({ title, body });
+
+    try {
+        console.log("sending notification")
+        console.log('Subscription:', subscription);
+        console.log('Payload:', payload);
+
+        await webpush.sendNotification(subscription, payload)
+    }
+    catch (err: any) {
+
+        console.log('Error message:', err.message);
+        console.log('Status code:', err.statusCode);
+        console.log('Stack trace:', err.stack);
     }
 }

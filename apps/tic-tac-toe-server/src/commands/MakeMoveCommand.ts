@@ -3,7 +3,7 @@ import { PublicRoom } from "../rooms/PublicRoom";
 import { AIMoveCommand } from "./AIMoveCommand";
 import { ArraySchema } from "@colyseus/schema";
 import { ServerMessages } from "@natewilcox/tic-tac-toe-shared";
-import { checkWinner, cpuReadyUp, printBoard } from "../utils/GameUtils";
+import { checkWinner, cpuReadyUp, printBoard, sendPushNotification } from "../utils/GameUtils";
 
 type Payload = {
     client?: any,
@@ -63,9 +63,14 @@ export class MakeMoveCommand extends Command<PublicRoom, Payload> {
             });
         }
         else {
-            this.room.state.currentTurn = marker == 'X' ? this.room.state.playerO.client?.id : this.room.state.playerX.client?.id;
+
+            const nextPlayer = marker == 'X' ? this.room.state.playerO : this.room.state.playerX;
+            this.room.state.currentTurn = marker == 'X' ? nextPlayer.client?.id : nextPlayer.client?.id;
+
+            sendPushNotification(nextPlayer.subscription, "Your Turn", "It's your turn to play!");
         }
 
         this.room.CLIENT.send(ServerMessages.MoveMade, { x, y, marker });
     }
 }
+

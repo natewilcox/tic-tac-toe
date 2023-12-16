@@ -12,4 +12,6 @@ export class PlayerState extends Schema implements IPlayerState {
     
     @type("boolean")
     offerRematch = false;
+
+    subscription: any;
 }
