@@ -14,7 +14,13 @@ self.addEventListener('push', async event => {
     };
 
     console.log('Notification options', options);
-    self.registration.showNotification(data.title, options);
+
+    const clientList = await self.clients.matchAll();
+    const isWindowFocused = clientList.some(client => client.visibilityState === 'visible' && client.focused);
+
+    if (!isWindowFocused) {
+        self.registration.showNotification(data.title, options);
+    }
 });
 
 self.addEventListener('install', function(event) {
