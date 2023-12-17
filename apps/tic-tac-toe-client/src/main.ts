@@ -88,5 +88,4 @@ async function registerServiceWorker() {
     }
 }
 
-unregisterServiceWorker();
-registerServiceWorker();
+unregisterServiceWorker().then(() => registerServiceWorker());

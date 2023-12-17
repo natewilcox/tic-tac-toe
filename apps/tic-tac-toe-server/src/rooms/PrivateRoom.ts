@@ -5,12 +5,14 @@ import { Dispatcher } from "@colyseus/command";
 import { LeaveCommand } from "../commands/LeaveCommand";
 import { MakeMoveCommand } from "../commands/MakeMoveCommand";
 import { RematchCommand } from "../commands/RematchCommand";
-import { ClientService } from "@natewilcox/colyseus-nathan";
-import { ClientMessages } from "@natewilcox/tic-tac-toe-shared";
+import { ClientService, PushNotificationService } from "@natewilcox/colyseus-nathan";
+import { ClientMessages, ServerMessages } from "@natewilcox/tic-tac-toe-shared";
 
 export class PrivateRoom extends Room<RoomState> {
   
     CLIENT: ClientService<ClientMessages>;
+    NOTIFICATIONS: PushNotificationService;
+    
     maxClients = 2;
     dispatcher: Dispatcher<PrivateRoom> = new Dispatcher(this);
 
@@ -21,7 +23,7 @@ export class PrivateRoom extends Room<RoomState> {
         this.setState(new RoomState());
         this.state.isCPU = !options.online;
         
-        this.CLIENT = new ClientService(this);
+        this.CLIENT = ClientService.getInstance<ClientMessages>(this);
         this.CLIENT.on(ClientMessages.MakeMove, (client, data) => {
             this.dispatcher.dispatch(new MakeMoveCommand(), {
                 client,
@@ -41,6 +43,11 @@ export class PrivateRoom extends Room<RoomState> {
         this.dispatcher.dispatch(new JoinCommand(), {
             client
         });
+        
+        console.log("send public key to new client");
+        this.CLIENT.send(ServerMessages.SetPublicKey, {
+            publicKey: this.NOTIFICATIONS.publicKey()
+        }, client);
     }
 
     async onLeave (client: Client, consented: boolean) {

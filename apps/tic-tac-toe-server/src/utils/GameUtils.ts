@@ -1,15 +1,6 @@
 import { ArraySchema } from "@colyseus/schema";
 import { RoomState } from "../rooms/schema/RoomState";
-import * as webpush from 'web-push';
-
-const publickey = "BCjma1am3LNrPBqf7eJkKyF8HYkE0jLX8RXICl00eNLBdA-4sf9moRDHwmV_hyg5lUyhA1BJaXXQOtX14SA--vw";
-const privatekey = "L-oG0LJMdU46jnIs1DbN17SdYPKG_8Xh7bTxYjrdDLo";
-
-webpush.setVapidDetails(
-    'mailto:natewilcox@gmail.com',
-    publickey,
-    privatekey
-);
+import { PushNotificationService } from "@natewilcox/colyseus-nathan";
 
 export const checkWinner = (board: ArraySchema<string>) => {
      
@@ -78,14 +69,15 @@ export const cpuReadyUp = (roomState: RoomState) => {
 
 export async function sendPushNotification(subscription: any, title: string, body: string) {
 
-    const payload = JSON.stringify({ title, body });
+    const notificaionService = PushNotificationService.getInstance();
 
     try {
         console.log("sending notification")
         console.log('Subscription:', subscription);
-        console.log('Payload:', payload);
+        console.log('title:', title);
+        console.log('body:', body);
 
-        await webpush.sendNotification(subscription, payload)
+        await notificaionService.sendPush(subscription, title, body)
     }
     catch (err: any) {
 

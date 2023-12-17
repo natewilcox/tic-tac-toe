@@ -1,7 +1,6 @@
 import { Command } from "@colyseus/command";
 import { PublicRoom } from "../rooms/PublicRoom";
 import { AIMoveCommand } from "./AIMoveCommand";
-import { ArraySchema } from "@colyseus/schema";
 import { ServerMessages } from "@natewilcox/tic-tac-toe-shared";
 import { checkWinner, cpuReadyUp, printBoard, sendPushNotification } from "../utils/GameUtils";
 

@@ -2,7 +2,7 @@ import 'dotenv/config';
 import * as Colyseus from "colyseus.js";
 import * as Nathan from "@natewilcox/phaser-nathan";
 import { ClientMessages, IRoomState, ServerMessages } from "@natewilcox/tic-tac-toe-shared";
-import { sendNotification } from '@natewilcox/nathan-core';
+import { createWebPushSubscription, sendNotification } from '@natewilcox/nathan-core';
 
 export class GameScene extends Nathan.Scene
 {
@@ -37,7 +37,8 @@ export class GameScene extends Nathan.Scene
         const url = `${process.env.HOST}`;
         console.log(`Connecting to: ${url}`);
         
-        this.SERVER = new Nathan.ServerService(url);
+        this.SERVER = Nathan.ServerService.getInstance();
+        this.SERVER.configure(url)
         console.log("playing game");
 
         //get room info. private if invited. public if not
@@ -82,27 +83,10 @@ export class GameScene extends Nathan.Scene
         });
 
         this.SERVER.on(ServerMessages.SetPublicKey, async (data) => {
-            console.log("trying stuff");
-
-            const registration = await navigator.serviceWorker.ready;
-            let subscription = await registration.pushManager.getSubscription();
-
-            if (subscription) {
-                await subscription.unsubscribe();
-            }
-            
-            console.log('creating subscription');
-            subscription = await registration.pushManager.subscribe({
-                userVisibleOnly: true,
-                applicationServerKey: urlBase64ToUint8Array('BCjma1am3LNrPBqf7eJkKyF8HYkE0jLX8RXICl00eNLBdA-4sf9moRDHwmV_hyg5lUyhA1BJaXXQOtX14SA--vw')
-            });
-    
-            console.log('subscription=', JSON.stringify(subscription));
-            const payload = JSON.stringify(subscription);
-            console.log('payload=', payload);
-            
+   
+            console.log("setting subscription", "publickey", data.publicKey);
             this.SERVER.send(ClientMessages.SetSubscription, {
-                subscription: payload
+                subscription: await createWebPushSubscription(data.publicKey)
             });
         });
 
@@ -284,6 +268,7 @@ export class GameScene extends Nathan.Scene
             }
 
             console.log(`selecting [${x},${y}]`);
+            console.log(ClientMessages.MakeMove)
             this.SERVER.send(ClientMessages.MakeMove, { x, y });
         });
     };
@@ -342,19 +327,4 @@ export class GameScene extends Nathan.Scene
             console.log(`Placed '${marker}' at (${x}, ${y})`);
         }
     }
-}
-
-function urlBase64ToUint8Array(base64String: string) {
-    var padding = '='.repeat((4 - base64String.length % 4) % 4);
-    var base64 = (base64String + padding)
-        .replace(/\-/g, '+')
-        .replace(/_/g, '/');
-
-    var rawData = window.atob(base64);
-    var outputArray = new Uint8Array(rawData.length);
-
-    for (var i = 0; i < rawData.length; ++i) {
-        outputArray[i] = rawData.charCodeAt(i);
-    }
-    return outputArray;
 }
