@@ -1,6 +1,6 @@
 import { ArraySchema } from "@colyseus/schema";
 import { RoomState } from "../rooms/schema/RoomState";
-import { PushNotificationService } from "@natewilcox/colyseus-nathan";
+import { PushNotificationService } from "../services/PushNotificationService";
 
 export const checkWinner = (board: ArraySchema<string>) => {
      
