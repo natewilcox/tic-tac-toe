@@ -39,8 +39,6 @@
   "dependencies": {
     "@colyseus/command": "^0.2.1",
     "@faker-js/faker": "^8.3.1",
-    "@natewilcox/colyseus-nathan": "^0.0.5",
-    "@natewilcox/nathan-core": "^0.0.5",
     "@natewilcox/tic-tac-toe-shared": "0.0.53",
     "colyseus": "^0.15.13",
     "phaser": "^3.55.2",

@@ -1,9 +1,12 @@
 import Phaser from "phaser";
 import * as data from "./version.json";
-import * as Nathan from "@natewilcox/phaser-nathan";
 import { GameScene } from "./scenes/GameScene";
 import { addBuildInfo } from "@natewilcox/version-meta";
-import { requestPermissionForNotification } from "@natewilcox/nathan-core";
+import { BasicMenuScene } from "./scenes/BasicMenuScene";
+import { BasicMenuSceneConfig } from "./types/BasicMenuSceneConfig";
+import { Scene } from "./scenes/Scene";
+import { resizeToScreen } from "./utils/SceneUtils";
+import { requestPermissionForNotification } from "./utils/NotificationUtils";
 
 // adds build info to the window object
 addBuildInfo(data);
@@ -24,10 +27,10 @@ const config = {
 } as Phaser.Types.Core.GameConfig;
 
 const game = new Phaser.Game(config);
-game.scene.add('menu', Nathan.BasicMenuScene, false);
+game.scene.add('menu', BasicMenuScene, false);
 game.scene.add('game', GameScene, false);
 
-const menuConfig: Nathan.BasicMenuSceneConfig = {
+const menuConfig: BasicMenuSceneConfig = {
     title: 'TIC TAC TOE',
     subTitle: 'SELECT MODE:',
     menuItems: [{
@@ -41,19 +44,11 @@ const menuConfig: Nathan.BasicMenuSceneConfig = {
         options: {
             online: true,
         }
-    },
-    {
-        name: 'INVITE',
-        options: {
-            online: true,
-            invite: true
-        },
-        mobileOnly: true
     }],
-    oncreated: (scene: Nathan.Scene) => {
+    oncreated: (scene: Scene) => {
 
         //add resize listener when scene is created
-        Nathan.resizeToScreen(scene, true, 800, 800);
+        resizeToScreen(scene, true, 800, 800);
     }
 };
 

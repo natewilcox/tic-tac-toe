@@ -1,10 +1,12 @@
 import 'dotenv/config';
 import * as Colyseus from "colyseus.js";
-import * as Nathan from "@natewilcox/phaser-nathan";
 import { ClientMessages, IRoomState, ServerMessages } from "@natewilcox/tic-tac-toe-shared";
-import { createWebPushSubscription, sendNotification } from '@natewilcox/nathan-core';
+import { Scene } from './Scene';
+import { ServerService } from '../services/ServerService';
+import { addImage, addText, resizeToScreen, sendSMSInvite } from '../utils/SceneUtils';
+import { createWebPushSubscription, sendNotification } from '../utils/NotificationUtils';
 
-export class GameScene extends Nathan.Scene
+export class GameScene extends Scene
 {
     //board entities
     private match: Phaser.GameObjects.Text;
@@ -20,7 +22,7 @@ export class GameScene extends Nathan.Scene
         [' ', ' ', ' '],
     ];
 
-    SERVER: Nathan.ServerService<IRoomState, ClientMessages>;
+    SERVER: ServerService<IRoomState, ClientMessages>;
 
     constructor () {
         super('game');
@@ -32,12 +34,12 @@ export class GameScene extends Nathan.Scene
 
     async create(config?: any) {
         super.create();
-        Nathan.resizeToScreen(this, true, 800, 800);
+        resizeToScreen(this, true, 800, 800);
 
         const url = `${process.env.HOST}`;
         console.log(`Connecting to: ${url}`);
         
-        this.SERVER = Nathan.ServerService.getInstance();
+        this.SERVER = ServerService.getInstance();
         this.SERVER.configure(url)
         console.log("playing game");
 
@@ -64,10 +66,6 @@ export class GameScene extends Nathan.Scene
 
         this.drawBoard();
         this.configureStateListeners();
-
-        if(config.invite) {
-            Nathan.sendSMSInvite('https://tic-tac-toe.natewilcox.io', this.SERVER.RoomId);
-        }
 
         this.events.on(Phaser.Scenes.Events.SHUTDOWN, () => {
             this.input.off('pointerdown');
@@ -197,33 +195,33 @@ export class GameScene extends Nathan.Scene
         }
         const matchTextPos = portrait ? 50 : 20;
         const matchTextSize = portrait ? '15px' : '25px';
-        this.match = Nathan.addText(this, 'Red Vs. Blue', centerX, matchTextPos, { size: matchTextSize });
+        this.match = addText(this, 'Red Vs. Blue', centerX, matchTextPos, { size: matchTextSize });
 
         if(this.back) {
             this.back.off('pointerdown');
             this.back.destroy();
         }
-        this.back = Nathan.addText(this, 'BACK', 40, canvas.height - 20, { size: '20px' }, this.handleBack);
+        this.back = addText(this, 'BACK', 40, canvas.height - 20, { size: '20px' }, this.handleBack);
 
         if(this.status) {
             this.status.destroy();
         }
         const statusTextPos = portrait ? canvas.height - 50 : canvas.height - 20;
-        this.status = Nathan.addText(this, 'waiting for players...', centerX, statusTextPos, { size: '20px' });
+        this.status = addText(this, 'waiting for players...', centerX, statusTextPos, { size: '20px' });
 
         if(this.rematch) {
             this.rematch.off('pointerdown');
             this.rematch.destroy();
         }
         const rematchTextPos = portrait ? canvas.height - 20 : canvas.height - 20;
-        this.rematch = Nathan.addText(this, 'REMATCH?', canvas.width - 100, rematchTextPos, { size: '20px' }, this.handleRematch);
+        this.rematch = addText(this, 'REMATCH?', canvas.width - 100, rematchTextPos, { size: '20px' }, this.handleRematch);
         this.rematch.setVisible(false);
 
         if(this.rematchBadge) {
             this.rematchBadge.destroy();
         }
         const rematchBadgePos = portrait ? canvas.height - 23 : canvas.height - 23;
-        this.rematchBadge = Nathan.addImage(this, 'rematch', canvas.width - 25, rematchBadgePos, { scale: 0.5 });
+        this.rematchBadge = addImage(this, 'rematch', canvas.width - 25, rematchBadgePos, { scale: 0.5 });
         this.rematchBadge.setVisible(false);
         
         //draw actual board
