@@ -1,6 +1,6 @@
 {
   "name": "@natewilcox/tic-tac-toe-shared",
-  "version": "0.0.58",
+  "version": "0.0.59",
   "description": "A shared library for a multiplayer Tic Tac Toe game, providing common components and utilities used by both the client-side and server-side applications.",
   "author": "Nathan Wilcox",
   "repository": {
