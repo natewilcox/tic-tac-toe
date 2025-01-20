@@ -1,20 +1,18 @@
+import { ClientMessages } from "@natewilcox/tic-tac-toe-shared";
 import { Client, Room } from "colyseus";
 
-//message types have to include SendMessage
-type EnumWithSendMessage<T> = T & { SendMessage: 0 };
 
-export class ClientService<M> {
+export class ClientService {
 
-    private static instance: ClientService<any>;
+    private static instance: ClientService;
     
     private room: Room;
     private clientHandlers = new Map<number, (client: Client, msg: any) => void>();
-    private msgs = { SendMessage: 0 } as EnumWithSendMessage<M>;
 
     private constructor(room: Room) {
         this.room = room;
 
-        this.room.onMessage(this.msgs.SendMessage, (client, data) => {
+        this.room.onMessage(ClientMessages.SendMessage, (client, data) => {
     
             const handler = this.clientHandlers.get(data.type);
        
@@ -25,10 +23,10 @@ export class ClientService<M> {
 
     }
 
-    public static getInstance<T>(room: Room): ClientService<T> {
+    public static getInstance(room: Room): ClientService {
 
         if (!ClientService.instance) {
-            ClientService.instance = new ClientService<T>(room);
+            ClientService.instance = new ClientService(room);
         }
 
         return ClientService.instance;
@@ -38,14 +36,14 @@ export class ClientService<M> {
 
         if(client) {
             
-            client.send(this.msgs.SendMessage, {
+            client.send(ClientMessages.SendMessage, {
                 type: msgType,
                 ...data,
             });
             return;
         }
         else {
-            this.room.broadcast(this.msgs.SendMessage, {
+            this.room.broadcast(ClientMessages.SendMessage, {
                 type: msgType,
                 ...data,
             });

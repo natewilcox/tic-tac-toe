@@ -11,7 +11,7 @@ import { PushNotificationService } from "../services/PushNotificationService";
 
 export class PrivateRoom extends Room<RoomState> {
   
-    CLIENT: ClientService<ClientMessages>;
+    CLIENT: ClientService;
     NOTIFICATIONS: PushNotificationService;
     
     maxClients = 2;
@@ -24,7 +24,7 @@ export class PrivateRoom extends Room<RoomState> {
         this.setState(new RoomState());
         this.state.isCPU = !options.online;
         
-        this.CLIENT = ClientService.getInstance<ClientMessages>(this);
+        this.CLIENT = ClientService.getInstance(this);
         this.CLIENT.on(ClientMessages.MakeMove, (client, data) => {
             this.dispatcher.dispatch(new MakeMoveCommand(), {
                 client,
