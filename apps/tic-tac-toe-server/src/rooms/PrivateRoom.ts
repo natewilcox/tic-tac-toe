@@ -5,8 +5,9 @@ import { Dispatcher } from "@colyseus/command";
 import { LeaveCommand } from "../commands/LeaveCommand";
 import { MakeMoveCommand } from "../commands/MakeMoveCommand";
 import { RematchCommand } from "../commands/RematchCommand";
-import { ClientService, PushNotificationService } from "@natewilcox/colyseus-nathan";
 import { ClientMessages, ServerMessages } from "@natewilcox/tic-tac-toe-shared";
+import { ClientService } from "../services/ClientService";
+import { PushNotificationService } from "../services/PushNotificationService";
 
 export class PrivateRoom extends Room<RoomState> {
   
