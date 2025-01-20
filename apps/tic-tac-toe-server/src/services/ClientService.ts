@@ -20,16 +20,19 @@ export class ClientService {
                 handler(client, data);
             }
         });
-
     }
 
     public static getInstance(room: Room): ClientService {
 
-        if (!ClientService.instance) {
+        if(!ClientService.instance) {
             ClientService.instance = new ClientService(room);
         }
 
         return ClientService.instance;
+    }
+    
+    public static destroy() {
+        ClientService.instance = null;
     }
     
     send(msgType: number, data?: any, client?: Client) {

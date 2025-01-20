@@ -74,5 +74,6 @@ export class PublicRoom extends Room<RoomState> {
 
     onDispose() {
         console.log("room", this.roomId, "disposing...");
+        ClientService.destroy();
     }
 }
